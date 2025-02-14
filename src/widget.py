@@ -5,8 +5,8 @@ def mask_account_card(card_inf: str) -> str:
     """Обрабатывает информацию как о картах, так и о счетах
     возвращает строку с замаскированным номером"""
     index = 0
-    for i in card_inf:
-        if i.isdigit():
+    for value in card_inf:
+        if value.isdigit():
             break
         else:
             index += 1

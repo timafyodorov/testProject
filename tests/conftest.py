@@ -1,10 +1,10 @@
-import pytest
+from typing import Any
 
-from src.decorators import log
+import pytest
 
 
 @pytest.fixture
-def test():
+def operations_info() -> list[Any]:
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -13,10 +13,17 @@ def test():
     ]
 
 
-@pytest.fixture
-def transactions():
+def transactions_info():
     return [
-        {},
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод организации",
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702",
+        },
         {
             "id": 142264268,
             "state": "EXECUTED",
@@ -54,23 +61,3 @@ def transactions():
             "to": "Счет 14211924144426031657",
         },
     ]
-
-
-@log(filename="")
-def test_1(x):
-    return x + x
-
-
-@log(filename="")
-def test_2(x, y):
-    return x + y
-
-
-@log(filename="log_test")
-def test_3(x):
-    return x + x
-
-
-@log(filename="error_test")
-def test_4(x, y):
-    return x + y

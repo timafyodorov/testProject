@@ -17,7 +17,7 @@ def test_log_console(capsys):
 
 
 def test_log_file():
-    filename = "tralalero-tralala.txt"
+    filename = "mylog.txt"
 
     @log(filename=filename)
     def test_function(x, y):
@@ -31,4 +31,4 @@ def test_log_file():
     assert text.read() == "test_function 11"
     test_function(1, "10")
     text = open(file_path, "r")
-    assert """test_function error:TypeError. Inputs: (1, '10'), {}""" == text.read()
+    assert text.read() == """test_function error:TypeError. Inputs: (1, '10'), {}"""

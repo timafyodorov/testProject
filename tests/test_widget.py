@@ -1,22 +1,31 @@
 import pytest
 
-from src.widget import get_date, mask_account_card
-
-
-@pytest.fixture
-def get_dates() -> str:
-    return "2019-07-03T18:35:29.512364"
+from src import widget
 
 
 @pytest.mark.parametrize(
-    "data, result",
+    "card_or_account_info,expected",
     [
-        ("Visa Platinum 7000792289606361", "Visa Platinum 7000 79** **** 6361"),
+        ("Maestro 1596837868705199", "Maestro 1596 83** **** 5199"),
+        ("Visa Classic 6831982476737658", "Visa Classic 6831 98** **** 7658"),
+        ("Счет 73654108430135874305", "Счет **4305"),
+        ("Maestro 159683786870519", "Error"),
+        ("Maestro 159683786prtyipt", "Error"),
+        ("Maestro1596837868705199", "Error"),
+        ("Счет 7365410843013587430", "Error"),
     ],
 )
+def test_mask_account_card(card_or_account_info, expected):
+    assert widget.mask_account_card(card_or_account_info) == expected
 
-def test_mask_account_card(data: str, result: str) -> None:
-    assert mask_account_card(data) == result
 
-def test_get_date(get_dates: str) -> None:
-    assert get_date(get_dates) == "03.07.2019"
+@pytest.mark.parametrize(
+    "date,expected",
+    [
+        ("2024-03-11T02:26:18.671407", "11.03.2024"),
+        ("2025-02-10T02:26:18.671407", "10.02.2025"),
+        ("200-03-11T02:26:18.671407", "Error"),
+    ],
+)
+def test_get_date(date, expected):
+    assert widget.get_date(date) == expected

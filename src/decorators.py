@@ -1,9 +1,10 @@
+import os
 from functools import wraps
 
 
 def log(filename=""):
-    """Проверяет функцию на ошибки
-    и если в начале дано название файла то записывает лог в файл если нет то выводит в консоль"""
+    """Проверка данной функции на ошибки,
+    а если в начале дано название файла, то записывает лог в файл если нет, то вывод в консоль"""
 
     def decorator(func):
         @wraps(func)
@@ -14,28 +15,25 @@ def log(filename=""):
                 if filename == "":
                     return f"{func.__name__} error:{type(e).__name__}. Inputs: {args}, {kwargs}"
                 else:
-                    log_file = open(filename, "w")
+                    base_dir = os.path.dirname(os.path.abspath(__file__))
+                    log_dir = os.path.join(base_dir, "..", "logs")
+                    log_file_path = os.path.join(log_dir, filename)
+                    log_file = open(log_file_path, "w")
                     log_file.write(f"{func.__name__} error:{type(e).__name__}. Inputs: {args}, {kwargs}")
                     log_file.close()
+                    return ""
             else:
                 if filename == "":
-                    return func.__name__ + " ok"
-                    return func.__name__ + " " + str(result)
+                    return f"{func.__name__} {result}"
                 else:
-                    log_file = open(filename, "w")
-                    log_file.write(func.__name__ + " ok")
-                    log_file.write(func.__name__ + " " + str(result))
+                    base_dir = os.path.dirname(os.path.abspath(__file__))
+                    log_dir = os.path.join(base_dir, "..", "logs")
+                    log_file_path = os.path.join(log_dir, filename)
+                    log_file = open(log_file_path, "w")
+                    log_file.write(f"{func.__name__} {result}")
                     log_file.close()
-            return ""
+                    return ""
 
         return inner
 
     return decorator
-
-
-@log(filename="mylog.txt")
-def my_function(x, y):
-    return x + y
-
-
-print(my_function(1, 3))

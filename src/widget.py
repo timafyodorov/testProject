@@ -22,4 +22,3 @@ def get_date(date: str) -> str:
     и возвращает строку с датой в формате 'ДД.ММ.ГГГГ'"""
     year, month, day = date[:10].split("-")
     return f"{day}.{month}.{year}"
-

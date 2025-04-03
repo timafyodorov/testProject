@@ -14,22 +14,22 @@ def test_get_transaction_amount_mock(mock_get, transaction):
     API_KEY = os.getenv("API_KEY")
     mock_get.assert_called_once_with(
         "https://api.apilayer.com/exchangerates_data/convert?to=RUB&from=USD&amount=31957.58",
-        headers={"apikey": API_KEY}
+        headers={"apikey": API_KEY},
     )
 
 
 def test_get_transaction_amount():
     assert (
-            get_transaction_amount(
-                {
-                    "id": 441945886,
-                    "state": "EXECUTED",
-                    "date": "2019-08-26T10:50:58.294041",
-                    "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
-                    "description": "Перевод организации",
-                    "from": "Maestro 1596837868705199",
-                    "to": "Счет 64686473678894779589",
-                }
-            )
-            == "31957.58"
+        get_transaction_amount(
+            {
+                "id": 441945886,
+                "state": "EXECUTED",
+                "date": "2019-08-26T10:50:58.294041",
+                "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
+                "description": "Перевод организации",
+                "from": "Maestro 1596837868705199",
+                "to": "Счет 64686473678894779589",
+            }
+        )
+        == "31957.58"
     )

@@ -45,6 +45,7 @@ def transactions():
         },
     ]
 
+
 def test_filter_by_currency(transactions):
     usd_transactions = list(filter_by_currency(transactions, "USD"))
     assert usd_transactions == [
@@ -68,6 +69,7 @@ def test_filter_by_currency(transactions):
         },
     ]
 
+
 def test_transaction_descriptions(transactions):
     total_descriptions = list(transaction_descriptions(transactions))
     assert total_descriptions == [
@@ -85,12 +87,7 @@ def test_transaction_descriptions(transactions):
         (
             567,
             570,
-            [
-                "0000 0000 0000 0567",
-                "0000 0000 0000 0568",
-                "0000 0000 0000 0569",
-                "0000 0000 0000 0570"
-            ],
+            ["0000 0000 0000 0567", "0000 0000 0000 0568", "0000 0000 0000 0569", "0000 0000 0000 0570"],
         ),
     ],
 )
